@@ -102,9 +102,9 @@ class NutritionDatabase {
         )
     }
 
-    fun getFoodItems(): List<FoodItem> {
-        return foodItems
-    }
+        fun searchFoodItemByName(name: String): FoodItem? {
+            return foodItems.find { it.name.equals(name, ignoreCase = true) }
+        }
     }
 }
 

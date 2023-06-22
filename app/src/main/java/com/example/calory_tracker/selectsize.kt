@@ -1,7 +1,7 @@
 package com.example.calory_tracker
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
@@ -14,8 +14,7 @@ class selectsize : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sizing)
 
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
+
         val foodName = intent.getStringExtra("foodName")
         val issolid = intent.getBooleanExtra("issolid",false)
         val protein = intent.getIntExtra("protein",0)
@@ -55,6 +54,18 @@ class selectsize : AppCompatActivity() {
                 // Use the 'progress' variable to get the current value of the SeekBar
             }
         })
+
+        next.setOnClickListener{
+            val intent = Intent(this, mainpage::class.java)
+            intent.putExtra("foodName", foodName)
+            intent.putExtra("size", seekbar.progress)
+            intent.putExtra("issolid", issolid)
+            intent.putExtra("protein", protein)
+            intent.putExtra("carbs", carbs)
+            intent.putExtra("fats", fats)
+            intent.putExtra("calories", calories)
+            startActivity(intent)
+        }
 
 
 
