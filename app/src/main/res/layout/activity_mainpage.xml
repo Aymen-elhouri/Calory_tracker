@@ -92,7 +92,7 @@
             android:layout_marginEnd="17dp"
             android:indeterminate="false"
             android:max="100"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/progress_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
             tools:max="100"
-            tools:progress="10" />
+            tools:progress="0" />
 
         <ProgressBar
             android:id="@+id/progressBar3"
@@ -126,7 +126,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/progressBar2"
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:progress="90" />
+            tools:progress="0" />
 
         <ProgressBar
             android:id="@+id/progressBar4"
@@ -143,7 +143,7 @@
             app:layout_constraintHorizontal_bias="0.342"
             app:layout_constraintStart_toEndOf="@+id/progressBar3"
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:progress="90" />
+            tools:progress="0" />
 
         <TextView
             android:id="@+id/textView18"
@@ -505,6 +505,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/border_background"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropping1">
 
@@ -515,7 +516,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Broccoli"
             android:textAppearance="?android:textAppearanceLarge"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
@@ -542,6 +542,19 @@
             app:layout_constraintStart_toStartOf="@+id/sizing"
             app:layout_constraintTop_toBottomOf="@+id/sizing" />
 
+        <Button
+            android:id="@+id/deletebreakfast"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:backgroundTint="#70442D"
+            android:padding="2dp"
+            android:text="Delete"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -558,7 +571,7 @@
         android:text="+   Add Breakfast"
         android:textColor="#00C513"
         android:textSize="17sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -765,6 +778,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/border_background"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropping2">
 
@@ -775,7 +789,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Broccoli"
             android:textAppearance="?android:textAppearanceLarge"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
@@ -802,6 +815,19 @@
             app:layout_constraintStart_toStartOf="@+id/sizing1"
             app:layout_constraintTop_toBottomOf="@+id/sizing1" />
 
+        <Button
+            android:id="@+id/deletelunch"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:backgroundTint="#70442D"
+            android:padding="2dp"
+            android:text="Delete"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -818,7 +844,7 @@
         android:text="+   Add Lunch"
         android:textColor="#00C513"
         android:textSize="17sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -1025,6 +1051,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/border_background"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropping3">
 
@@ -1035,7 +1062,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Broccoli"
             android:textAppearance="?android:textAppearanceLarge"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
@@ -1062,6 +1088,19 @@
             app:layout_constraintStart_toStartOf="@+id/sizing2"
             app:layout_constraintTop_toBottomOf="@+id/sizing2" />
 
+        <Button
+            android:id="@+id/deletedinner"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:backgroundTint="#70442D"
+            android:padding="2dp"
+            android:text="Delete"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/foodNameTextView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1078,7 +1117,7 @@
         android:text="+   Add Dinner"
         android:textColor="#00C513"
         android:textSize="17sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

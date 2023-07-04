@@ -4,6 +4,7 @@ import NutritionDatabase
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -27,6 +28,20 @@ class mainpage : AppCompatActivity() {
         lateinit var constraintLayout2: ConstraintLayout
         constraintLayout2 = findViewById(R.id.dropping3)
 
+        lateinit var tv1: ConstraintLayout
+        tv1 = findViewById(R.id.breakfastfood)
+        lateinit var tv2: ConstraintLayout
+        tv2 = findViewById(R.id.lunchfood)
+        lateinit var tv3: ConstraintLayout
+        tv3 = findViewById(R.id.dinnerfood)
+
+        var deletebreakfast = findViewById<Button>(R.id.deletebreakfast)
+        var deletelunch = findViewById<Button>(R.id.deletelunch)
+        var deletedinner = findViewById<Button>(R.id.deletedinner)
+
+
+
+
         val caloriestv = findViewById<TextView>(R.id.textView15)
         val carbs = findViewById<TextView>(R.id.textView18)
         val protein = findViewById<TextView>(R.id.textView22)
@@ -42,6 +57,13 @@ class mainpage : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
+
+        val sharedPreferences1 = getSharedPreferences("sharedPrefs1", Context.MODE_PRIVATE)
+        val editor1 = sharedPreferences1.edit()
+        val sharedPreferences2 = getSharedPreferences("sharedPrefs2", Context.MODE_PRIVATE)
+        val editor2 = sharedPreferences2.edit()
+        val sharedPreferences3 = getSharedPreferences("sharedPrefs3", Context.MODE_PRIVATE)
+        val editor3 = sharedPreferences3.edit()
 
         var calories = sharedPreferences.getInt("calories",0)
 
@@ -74,6 +96,11 @@ class mainpage : AppCompatActivity() {
             } else {
                 myView.visibility = View.VISIBLE
             }
+            if (tv1.visibility == View.VISIBLE) {
+                tv1.visibility = View.GONE
+            } else {
+                tv1.visibility = View.VISIBLE
+            }
         }
 
         constraintLayout1.setOnClickListener {
@@ -81,6 +108,12 @@ class mainpage : AppCompatActivity() {
                 myView1.visibility = View.GONE
             } else {
                 myView1.visibility = View.VISIBLE
+            }
+
+            if (tv2.visibility == View.VISIBLE) {
+                tv2.visibility = View.GONE
+            } else {
+                tv2.visibility = View.VISIBLE
             }
         }
 
@@ -90,9 +123,27 @@ class mainpage : AppCompatActivity() {
             } else {
                 myView2.visibility = View.VISIBLE
             }
+
+            if (tv3.visibility == View.VISIBLE) {
+                tv3.visibility = View.GONE
+            } else {
+                tv3.visibility = View.VISIBLE
+            }
         }
 
         myView.setOnClickListener{
+            editor.putString("controller","breakfast")
+            editor.apply()
+            startActivity(Intent(this,search1::class.java))
+        }
+        myView1.setOnClickListener{
+            editor.putString("controller","lunch")
+            editor.apply()
+            startActivity(Intent(this,search1::class.java))
+        }
+        myView2.setOnClickListener{
+            editor.putString("controller","dinner")
+            editor.apply()
             startActivity(Intent(this,search1::class.java))
         }
 
@@ -129,37 +180,73 @@ class mainpage : AppCompatActivity() {
         val sizing2 = findViewById<TextView>(R.id.sizing2)
         val unit2 = findViewById<TextView>(R.id.sizing42)
 
-
-
-
         val foodName = intent.getStringExtra("foodName")
         val foodsize = intent.getIntExtra("size",0)*10
-        val foodprotein = intent.getIntExtra("protein",0)
-        val foodcarbs = intent.getIntExtra("carbs",0)
-        val foodcalories = intent.getIntExtra("calories",0)
 
         val foodItemName = foodName
         val foundFoodItem = NutritionDatabase.searchFoodItemByName(foodItemName.toString())
 
-        if (foundFoodItem != null) {
-            bname.text=foundFoodItem.name
-            if(foodsize!=0){
-                sizing.text = foodsize.toString()}
-            if (foundFoodItem.isSolid){
-                unit.text = "grams"
+        fun calcul(foodeditor: SharedPreferences.Editor){
+            if (foundFoodItem != null) {
+                var sizingunit = ""
+                foodeditor.putString("name",foundFoodItem.name)
+                foodeditor.putString("foodsizing",foodsize.toString())
+                sizingunit = if (foundFoodItem.isSolid){
+                    "grams"
+                } else{
+                    "Milliliters"
+                }
+                foodeditor.putString("foodunit",sizingunit)
+                foodeditor.putInt("calories",((foundFoodItem.calories*(foodsize/100)).toInt()))
+                foodeditor.putInt("carbs",(foundFoodItem.carbohydrates*(foodsize/100)).toInt())
+                foodeditor.putInt("protein",(foundFoodItem.protein*(foodsize/100)).toInt())
+                foodeditor.putInt("fat",(foundFoodItem.fat*(foodsize/100)).toInt())
+                foodeditor.apply()
             }
-            else{unit.text = "Milliliters"}
-            breakfastcaloriestv.text=((foundFoodItem.calories*(foodsize/100)).toInt()).toString()
-            breakfastcarbs.text= (foundFoodItem.carbohydrates*(foodsize/100)).toString()
-            breakfastprotein.text= (foundFoodItem.protein*(foodsize/100)).toString()
-            breakfastfat.text= (foundFoodItem.fat*(foodsize/100)).toString()
         }
 
+        var result = sharedPreferences.getString("controller","").toString()
+        if (result == "breakfast") {
+            calcul(editor1)
+        }
+        if (result == "lunch") {
+            calcul(editor2)
+        }
+        if (result == "dinner") {
+            calcul(editor3)
+        }
+
+        bname.text= sharedPreferences1.getString("name","")
+        sizing.text = sharedPreferences1.getString("foodsizing","")
+        unit.text = sharedPreferences1.getString("foodunit","")
+        breakfastcaloriestv.text= sharedPreferences1.getInt("calories",0).toString()
+        breakfastcarbs.text=  sharedPreferences1.getInt("carbs",0).toString()
+        breakfastprotein.text= sharedPreferences1.getInt("protein",0).toString()
+        breakfastfat.text=  sharedPreferences1.getInt("fat",0).toString()
+        if(bname.text==""){bname.text="Empty"
+        deletebreakfast.visibility = View.GONE}
 
 
+        bname1.text= sharedPreferences2.getString("name","")
+        sizing1.text = sharedPreferences2.getString("foodsizing","")
+        unit1.text = sharedPreferences2.getString("foodunit","")
+        lunchcaloriestv.text= sharedPreferences2.getInt("calories",0).toString()
+        lunchcarbs.text=  sharedPreferences2.getInt("carbs",0).toString()
+        lunchprotein.text= sharedPreferences2.getInt("protein",0).toString()
+        lunchfat.text=  sharedPreferences2.getInt("fat",0).toString()
+        if(bname1.text==""){bname1.text="Empty"
+            deletelunch.visibility = View.GONE}
 
 
-
+        bname2.text= sharedPreferences3.getString("name","")
+        sizing2.text = sharedPreferences3.getString("foodsizing","")
+        unit2.text = sharedPreferences3.getString("foodunit","")
+        dinnercaloriestv.text= sharedPreferences3.getInt("calories",0).toString()
+        dinnercarbs.text=  sharedPreferences3.getInt("carbs",0).toString()
+        dinnerprotein.text= sharedPreferences3.getInt("protein",0).toString()
+        dinnerfat.text=  sharedPreferences3.getInt("fat",0).toString()
+        if(bname2.text==""){bname2.text="Empty"
+            deletedinner.visibility = View.GONE}
 
 
 
@@ -174,6 +261,48 @@ class mainpage : AppCompatActivity() {
         carbsprogress.progress = totalcarbs.toInt()
         proteinprogress.progress = totalprotein.toInt()
         fatprogress.progress = totalfat.toInt()
+
+        deletebreakfast.setOnClickListener{
+            editor1.putString("name","")
+            editor1.putString("foodsizing","")
+            editor1.putString("foodunit","")
+            editor1.putInt("calories",0)
+            editor1.putInt("carbs",0)
+            editor1.putInt("protein",0)
+            editor1.putInt("fat",0)
+            editor1.apply()
+            startActivity(Intent(this,mainpage::class.java))
+        }
+        deletelunch.setOnClickListener{
+            editor2.putString("name","")
+            editor2.putString("foodsizing","")
+            editor2.putString("foodunit","")
+            editor2.putInt("calories",0)
+            editor2.putInt("carbs",0)
+            editor2.putInt("protein",0)
+            editor2.putInt("fat",0)
+            editor2.apply()
+            startActivity(Intent(this,mainpage::class.java))
+        }
+        deletedinner.setOnClickListener{
+            editor3.putString("name","")
+            editor3.putString("foodsizing","")
+            editor3.putString("foodunit","")
+            editor3.putInt("calories",0)
+            editor3.putInt("carbs",0)
+            editor3.putInt("protein",0)
+            editor3.putInt("fat",0)
+            editor3.apply()
+            startActivity(Intent(this,mainpage::class.java))
+        }
+
+
+
+
+
+
+
+
 
 
 
